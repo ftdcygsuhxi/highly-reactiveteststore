@@ -1,12 +1,15 @@
-function lengthOfLIS(nums) {
-  if (nums.length === 0) return 0;
-  const dp = new Array(nums.length).fill(1);
-  let max = 1;
-  for (let i = 1; i < nums.length; i++) {
-    for (let j = 0; j < i; j++) {
-      if (nums[i] > nums[j]) dp[i] = Math.max(dp[i], dp[j] + 1);
-    }
-    max = Math.max(max, dp[i]);
+function minMeetingRoomsII(intervals) {
+  const startTimes = intervals
+    .map((interval) => interval[0])
+    .sort((a, b) => a - b);
+  const endTimes = intervals
+    .map((interval) => interval[1])
+    .sort((a, b) => a - b);
+  let rooms = 0;
+  let endIdx = 0;
+  for (let i = 0; i < startTimes.length; i++) {
+    if (startTimes[i] < endTimes[endIdx]) rooms++;
+    else endIdx++;
   }
-  return max;
+  return rooms;
 }
